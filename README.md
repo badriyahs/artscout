@@ -1,6 +1,6 @@
 # ArtScout
 
-Art residencies across the Arab world, for an artist friend of Badriyah's to apply to; Badriyah's scout finds and checks them.
+Art residencies across the Arab world, found and checked by Badriyah's scout.
 Live at **https://badriyahs.github.io/artscout/** (password screen with its own password, separate from Badriyah's Tasks).
 
 ## How it fits together
