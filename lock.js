@@ -1,9 +1,9 @@
 /* A password screen for the whole site, so casual visitors and anyone who finds the link meet a locked door.
    It runs in the browser, so it is a deterrent, not strong security: the database itself is still open.
    Only a salted, slow hash of the password is stored here, never the password. It remembers this device for 60 days.
-   Same password and same remembered unlock as Badriyah's Tasks (both live on badriyahs.github.io), so opening one opens the other. */
+   ArtScout has its own password and its own remembered unlock, separate from Badriyah's Tasks. */
 (function(){
-  var SALT = "e75e42c77b766be35a195c875744fc16", ITER = 200000, HASH = "9f04f8038985e9d76981d0f4e39eb3a3f1ea06df72aff35ee168be97ee9b56c5", KEY = 'badriyah-unlock-v1', DAYS = 60;
+  var SALT = "5b7f7515d826929d7c11522b2e8461c4", ITER = 200000, HASH = "e97d1d6f10eeac0fb1e99563164bcc25253cadc1bda23d371cd986fe61390508", KEY = 'artscout-unlock-v1', DAYS = 60;
   function unlocked(){ try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); return !!v && v.h === HASH && v.until > Date.now(); } catch(e){ return false; } }
   if(unlocked()) return;
   document.documentElement.classList.add('locked');

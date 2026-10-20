@@ -1,7 +1,7 @@
 # ArtScout
 
 Art residencies across the Arab world, found and checked by Badriyah's scout.
-Live at **https://badriyahs.github.io/artscout/** (password screen; same password as Badriyah's Tasks).
+Live at **https://badriyahs.github.io/artscout/** (password screen with its own password, separate from Badriyah's Tasks).
 
 ## How it fits together
 
@@ -12,7 +12,7 @@ Live at **https://badriyahs.github.io/artscout/** (password screen; same passwor
   The doc `_meta` records the last run. Each residency's `mine` field is her own status (Saved, Applying, Applied, Accepted, Not for me);
   only this site writes it, and the scout never changes it.
 - **This site** (`index.html`, `app.js`, `styles.css`) reads that collection and lets her filter by region, country, deadline and funding.
-  `lock.js` is the password screen, shared with Badriyah's Tasks.
+  `lock.js` is the password screen (the same design as Badriyah's Tasks, with its own password; only a salted hash is stored).
 
 ## One-time Firebase rule
 
