@@ -20,8 +20,9 @@
   var FUNDED = {funded: ['yes', 'Yes'], partly: ['partial', 'Partial'], self: ['no', 'No']};
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var SOON = 21;
+  var PHONE = window.matchMedia('(max-width:560px)'); // on a phone the details fold away
 
-  var state = {items: [], ok: null, loadedAt: 0, view: 'all'};
+  var state = {items: [], ok: null, loadedAt: 0, view: 'all', open: {}};
   try { var p = JSON.parse(localStorage.getItem(PREFS) || 'null'); if(p && p.view) state.view = p.view; } catch(e){}
   function savePrefs(){ try { localStorage.setItem(PREFS, JSON.stringify({view: state.view})); } catch(e){} }
 
@@ -146,7 +147,9 @@
         (fresh ? '<span class="tag new">New</span>' : '') +
       '</div>' +
       (i.blurb ? '<p class="blurb">' + esc(i.blurb) + '</p>' : '') +
-      (facts ? '<dl class="facts">' + facts + '</dl>' : '') +
+      (facts ? (PHONE.matches
+        ? '<details class="more"' + (state.open[i.id] ? ' open' : '') + '><summary>Details</summary><dl class="facts">' + facts + '</dl></details>'
+        : '<dl class="facts">' + facts + '</dl>') : '') +
       '<div class="react" role="group" aria-label="Your reaction">' + REACT.map(function(r){
         var on = i.mine === r[0];
         return '<button type="button" data-react="' + r[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '" aria-label="' + r[2] + '" title="' + r[2] + '">' + r[1] + '</button>';
@@ -198,7 +201,15 @@
   $('views').addEventListener('click', function(e){
     var b = e.target.closest('button[data-view]'); if(!b) return;
     state.view = b.getAttribute('data-view'); savePrefs(); render();
+    var top = document.querySelector('main').offsetTop; // a new view starts at its first card
+    if(window.scrollY > top) window.scrollTo(0, top);
   });
+  // remember which details are open, so a reaction doesn't fold them shut again
+  document.addEventListener('toggle', function(e){
+    var card = e.target.closest && e.target.closest('[data-id]');
+    if(card && e.target.classList.contains('more')) state.open[card.getAttribute('data-id')] = e.target.open;
+  }, true);
+  (PHONE.addEventListener ? PHONE.addEventListener('change', render) : PHONE.addListener(render));
   document.addEventListener('click', function(e){
     var r = e.target.closest('button[data-react]');
     if(r){
