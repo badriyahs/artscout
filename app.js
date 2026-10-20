@@ -144,9 +144,9 @@
     var n = Object.keys(countries).length;
     if(!state.items.length){ $('summary').innerHTML = ''; return; }
     $('summary').innerHTML =
-      '<span><b>' + open.length + '</b> open in <b>' + n + '</b> ' + (n === 1 ? 'country' : 'countries') + '</span>' +
-      '<span><b>' + soon.length + '</b> closing within 3 weeks</span>' +
-      '<span><b>' + funded.length + '</b> funded</span>' +
+      '<span><b>' + open.length + '</b> ' + (open.length === 1 ? 'residency' : 'residencies') + ' in <b>' + n + '</b> ' + (n === 1 ? 'country' : 'countries') + '</span>' +
+      (soon.length ? '<span><b>' + soon.length + '</b> closing within 3 weeks</span>' : '') +
+      (funded.length ? '<span><b>' + funded.length + '</b> funded</span>' : '') +
       (mine.length ? '<span><b>' + mine.length + '</b> on your list</span>' : '');
   }
 
