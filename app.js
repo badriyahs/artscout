@@ -226,7 +226,7 @@
   function renderList(items){
     var list = $('list');
     if(!state.items.length){
-      list.innerHTML = '<p class="empty"><b>No residencies filed yet</b>The scout checks on Sunday, Tuesday and Thursday mornings. They will appear here.</p>';
+      list.innerHTML = '<p class="empty"><b>No residencies filed yet</b>Badriyah is checking for more.</p>';
       return;
     }
     if(!items.length){
@@ -253,9 +253,7 @@
   function renderError(){
     $('summary').innerHTML = '';
     $('regions').innerHTML = '';
-    $('list').innerHTML = state.code === 403 || state.code === 401
-      ? '<p class="empty"><b>The scout’s notebook isn’t open yet</b>This page can’t read the ArtScout list yet. One Firebase rule needs publishing before the scout can file residencies here.</p>'
-      : '<p class="empty"><b>Couldn’t reach the scout’s list</b>Check the connection, then <button type="button" class="chips-reset" data-a="reload">try again</button>.</p>';
+    $('list').innerHTML = '<p class="empty"><b>Couldn’t load the residencies</b>Check the connection, then <button type="button" class="chips-reset" data-a="reload">try again</button>.</p>';
   }
 
   // ---------- toast ----------

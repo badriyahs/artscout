@@ -1,6 +1,6 @@
 # ArtScout
 
-Art residencies across the Arab world, found and checked by Badriyah's scout.
+Art residencies across the Arab world, for an artist friend of Badriyah's to apply to; Badriyah's scout finds and checks them.
 Live at **https://badriyahs.github.io/artscout/** (password screen with its own password, separate from Badriyah's Tasks).
 
 ## How it fits together
@@ -9,9 +9,9 @@ Live at **https://badriyahs.github.io/artscout/** (password screen with its own 
   It searches, verifies each call page, writes `~/Documents/BadriyahsTasks-backup/artscout-today.json`, and runs
   `~/Documents/BadriyahsTasks-backup/artscout_write.py`, the same way the daily Gulf scout uses `scout_write.py`.
 - **The data** lives in the same Firebase database as Badriyah's Tasks (`badriyahstasks`), collection `artscout`.
-  The doc `_meta` records the last run. Each residency's `mine` field is her own status (Saved, Applying, Applied, Accepted, Not for me);
+  The doc `_meta` records the last run. Each residency's `mine` field is the site user's own status (Saved, Applying, Applied, Accepted, Not for me);
   only this site writes it, and the scout never changes it.
-- **This site** (`index.html`, `app.js`, `styles.css`) reads that collection and lets her filter by region, country, deadline and funding.
+- **This site** (`index.html`, `app.js`, `styles.css`) reads that collection and lets them filter by region, country, deadline and funding.
   `lock.js` is the password screen (the same design as Badriyah's Tasks, with its own password; only a salted hash is stored).
 
 ## One-time Firebase rule

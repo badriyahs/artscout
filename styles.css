@@ -80,7 +80,7 @@ button,select,input{font:inherit;color:inherit;}
 .mast-run{margin:12px 0 0;color:var(--faint);font-size:13px;}
 
 /* ---- page body ---- */
-.wrap{max-width:1080px;margin:0 auto;padding:6px 16px 24px;}
+.wrap{max-width:1080px;margin:0 auto;padding:6px 16px 64px;}
 
 .summary{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin:4px 0 22px;color:var(--muted);font-size:14px;min-height:22px;}
 .summary b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
@@ -167,9 +167,6 @@ button,select,input{font:inherit;color:inherit;}
 .hidden-note{text-align:center;color:var(--faint);font-size:13.5px;margin:22px 0 0;}
 .hidden-note button{background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px;}
 
-.foot{max-width:720px;margin:20px auto 0;padding:24px 16px 48px;text-align:center;color:var(--faint);font-size:13px;border-top:1px solid var(--line);}
-.foot p{margin:0 0 8px;}
-.foot a{color:var(--muted);}
 
 .toast{
   position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);
