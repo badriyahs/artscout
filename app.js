@@ -21,7 +21,7 @@
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var SOON = 21;
 
-  var state = {items: [], ok: null, loadedAt: 0, view: 'all', showHidden: false};
+  var state = {items: [], ok: null, loadedAt: 0, view: 'all'};
   try { var p = JSON.parse(localStorage.getItem(PREFS) || 'null'); if(p && p.view) state.view = p.view; } catch(e){}
   function savePrefs(){ try { localStorage.setItem(PREFS, JSON.stringify({view: state.view})); } catch(e){} }
 
@@ -85,6 +85,7 @@
   function closingSoon(i){ var d = daysLeft(i.deadlineISO); return live(i) && i.status === 'open' && d !== null && d <= SOON; }
   function inView(i){
     if(state.view === 'liked') return !!LIKED[i.mine];
+    if(state.view === 'disliked') return i.mine === 'down';
     if(state.view === 'soon') return closingSoon(i);
     return live(i);
   }
@@ -104,15 +105,15 @@
     if(state.ok === false){ renderError(); return; }
     renderViews();
     renderList(state.items.filter(inView).sort(sorter));
-    renderHiddenNote();
   }
 
   function renderViews(){
-    var liked = state.items.filter(function(i){ return LIKED[i.mine]; }).length;
+    var count = {liked: 0, disliked: 0}, label = {liked: 'Liked', disliked: 'Disliked'};
+    state.items.forEach(function(i){ if(LIKED[i.mine]) count.liked++; else if(i.mine === 'down') count.disliked++; });
     Array.prototype.forEach.call($('views').children, function(b){
       var v = b.getAttribute('data-view');
       b.classList.toggle('on', v === state.view);
-      if(v === 'liked') b.innerHTML = 'Liked' + (liked ? '<span class="n">' + liked + '</span>' : '');
+      if(label[v]) b.innerHTML = label[v] + (count[v] ? '<span class="n">' + count[v] + '</span>' : '');
     });
   }
 
@@ -158,24 +159,12 @@
     if(!items.length){
       var msg = !state.items.length || state.view === 'all' ? ['No residencies filed yet', 'Badriyah is checking for more.']
               : state.view === 'liked' ? ['Nothing liked yet', 'Give a residency a 👍 or a ❤️ and it will wait here.']
+              : state.view === 'disliked' ? ['Nothing disliked', 'Anything with a 👎 goes here. Tap the 👎 again to bring it back.']
               : ['Nothing closes in the next three weeks', ''];
       list.innerHTML = '<p class="empty"><b>' + esc(msg[0]) + '</b>' + esc(msg[1]) + '</p>';
       return;
     }
     list.innerHTML = items.map(cardHTML).join('');
-  }
-
-  function renderHiddenNote(){
-    var hidden = state.items.filter(function(i){ return i.mine === 'down' && !isClosed(i); });
-    var el = $('hiddennote');
-    if(!hidden.length){ el.innerHTML = ''; state.showHidden = false; return; }
-    if(state.showHidden){
-      el.innerHTML = '<span>Hidden with 👎:</span> ' + hidden.map(function(i){
-        return '<button type="button" data-a="unhide" data-id="' + esc(i.id) + '">' + esc(i.title) + ' (bring back)</button>';
-      }).join(' ') + ' <button type="button" data-a="hidehidden">Done</button>';
-    } else {
-      el.innerHTML = hidden.length + ' hidden with 👎 · <button type="button" data-a="showhidden">See them</button>';
-    }
   }
 
   function renderError(){
@@ -198,7 +187,7 @@
     if(before === mine) return;
     item.mine = mine; render();
     saveMine(id, mine).then(function(){
-      if(mine === 'down') toast('Hidden: ' + item.title, function(){ setMine(id, before); });
+      if(mine === 'down' && state.view !== 'disliked') toast('Moved to Disliked', function(){ setMine(id, before); });
     }, function(){
       item.mine = before; render();
       toast('Couldn’t save that. Try again in a moment.');
@@ -220,10 +209,7 @@
     }
     var b = e.target.closest('button[data-a]'); if(!b) return;
     var a = b.getAttribute('data-a');
-    if(a === 'unhide') setMine(b.getAttribute('data-id'), '');
-    else if(a === 'showhidden'){ state.showHidden = true; renderHiddenNote(); }
-    else if(a === 'hidehidden'){ state.showHidden = false; renderHiddenNote(); }
-    else if(a === 'reload'){ $('list').innerHTML = '<p class="empty">Trying again…</p>'; load(); }
+    if(a === 'reload'){ $('list').innerHTML = '<p class="empty">Trying again…</p>'; load(); }
   });
   document.addEventListener('visibilitychange', function(){
     if(document.visibilityState === 'visible' && Date.now() - state.loadedAt > 10 * 60000) load();

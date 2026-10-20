@@ -149,8 +149,6 @@ button,select,input{font:inherit;color:inherit;}
 .react button.on{filter:none;opacity:1;background:rgba(255,255,255,.1);border-color:var(--line-strong);}
 .react button[data-react="heart"].on{background:var(--rose-tint);border-color:rgba(255,182,210,.5);}
 
-.hidden-note{text-align:center;color:var(--faint);font-size:13.5px;margin:22px 0 0;}
-.hidden-note button{background:none;border:0;color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px;}
 
 
 .toast{
@@ -166,6 +164,8 @@ button,select,input{font:inherit;color:inherit;}
   .masthead{padding:38px 16px 56px;}
   .sky::after{top:14px;right:7%;width:26px;height:26px;box-shadow:-5px 3px 0 0 #F6E4BE;}
   .mast-sub{font-size:15px;}
+  .views{gap:6px;flex-wrap:nowrap;}
+  .views button{padding:7px 12px;font-size:13.5px;white-space:nowrap;}
   .card{padding:16px 15px 14px;}
   .card h2{font-size:18.5px;}
 }
