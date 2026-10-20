@@ -14,8 +14,13 @@
     'Oman': 'عُمان', 'Palestine': 'فلسطين', 'Qatar': 'قطر', 'Saudi Arabia': 'السعودية', 'Somalia': 'الصومال', 'Sudan': 'السودان',
     'Syria': 'سوريا', 'Tunisia': 'تونس', 'UAE': 'الإمارات', 'Yemen': 'اليمن'
   };
-  // the three reactions, in the order they sit on a card
-  var REACT = [['up', '👍', 'Thumbs up'], ['down', '👎', 'Thumbs down'], ['heart', '❤️', 'Love it']];
+  // the three reactions, in the order they sit on a card (line icons from Lucide, ISC licence)
+  function icon(paths){ return '<svg viewBox="0 0 24 24" aria-hidden="true">' + paths + '</svg>'; }
+  var REACT = [
+    ['up', icon('<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>'), 'Thumbs up'],
+    ['down', icon('<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>'), 'Thumbs down'],
+    ['heart', icon('<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>'), 'Love it']
+  ];
   var LIKED = {up: 1, heart: 1};
   var FUNDED = {funded: ['yes', 'Yes'], partly: ['partial', 'Partial'], self: ['no', 'No']};
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -132,28 +137,29 @@
 
   function cardHTML(i){
     var link = safeURL(i.link), place = [i.city, i.country].filter(Boolean).join(', ');
-    var fresh = daysLeft(i.found); fresh = fresh !== null && fresh >= -3 && !i.mine;
     var f = FUNDED[i.funding];
+    var showHost = i.host && String(i.title).toLowerCase().indexOf(String(i.host).toLowerCase()) < 0;
     var facts = [['When', i.dates], ['Costs', i.fundingNote], ['Who', i.eligibility], ['Fields', i.disciplines]]
       .filter(function(x){ return x[1]; })
       .map(function(x){ return '<dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd>'; }).join('');
     return '<article class="card' + (i.mine ? ' r-' + esc(i.mine) : '') + (isClosed(i) ? ' is-closed' : '') + '" data-id="' + esc(i.id) + '">' +
-      '<div class="card-top"><span class="place">' + esc(place) + (AR[i.country] ? '<span class="ar" lang="ar">' + AR[i.country] + '</span>' : '') + '</span>' + dueHTML(i) + '</div>' +
-      '<h2>' + (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(i.title) + ' <span class="arrow">↗</span></a>' : esc(i.title)) + '</h2>' +
-      (i.host && i.host !== i.title ? '<p class="host">' + esc(i.host) + '</p>' : '') +
-      '<div class="badges">' +
-        (f ? '<span class="funded f-' + f[0] + '">Funded: <b>' + f[1] + '</b></span>' : '') +
-        (i.online === true ? '<span class="tag online">Online</span>' : '') +
-        (fresh ? '<span class="tag new">New</span>' : '') +
-      '</div>' +
+      '<div class="meta"><span class="place">' + esc(place) + (AR[i.country] ? '<span class="ar" lang="ar">' + AR[i.country] + '</span>' : '') + '</span>' + dueHTML(i) + '</div>' +
+      '<h2>' + (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(i.title) + '<span class="arrow"> ↗</span></a>' : esc(i.title)) + '</h2>' +
+      (showHost ? '<p class="host">' + esc(i.host) + '</p>' : '') +
       (i.blurb ? '<p class="blurb">' + esc(i.blurb) + '</p>' : '') +
       (facts ? (PHONE.matches
         ? '<details class="more"' + (state.open[i.id] ? ' open' : '') + '><summary>Details</summary><dl class="facts">' + facts + '</dl></details>'
         : '<dl class="facts">' + facts + '</dl>') : '') +
-      '<div class="react" role="group" aria-label="Your reaction">' + REACT.map(function(r){
-        var on = i.mine === r[0];
-        return '<button type="button" data-react="' + r[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '" aria-label="' + r[2] + '" title="' + r[2] + '">' + r[1] + '</button>';
-      }).join('') + '</div>' +
+      '<div class="foot">' +
+        '<div class="chips">' +
+          (f ? '<span class="funded f-' + f[0] + '">Funded:<b>' + f[1] + '</b></span>' : '') +
+          (i.online === true ? '<span class="online">Online</span>' : '') +
+        '</div>' +
+        '<div class="react" role="group" aria-label="Your reaction">' + REACT.map(function(r){
+          var on = i.mine === r[0];
+          return '<button type="button" data-react="' + r[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '" aria-label="' + r[2] + '" title="' + r[2] + '">' + r[1] + '</button>';
+        }).join('') + '</div>' +
+      '</div>' +
     '</article>';
   }
 

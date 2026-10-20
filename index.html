@@ -7,15 +7,15 @@
 <title>ArtScout</title>
 <meta name="description" content="Art residencies across the Arab world.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&display=swap">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&family=Amiri&display=swap">
+<link rel="stylesheet" href="styles.css?v=6">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ArtScout">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#161230">
+<meta name="theme-color" content="#100c25">
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -33,12 +33,14 @@
 </header>
 
 <main class="wrap">
-  <nav class="chips views" id="views" aria-label="Show">
-    <button type="button" data-view="all" class="on">All</button>
-    <button type="button" data-view="soon">Closing soon</button>
-    <button type="button" data-view="liked">Liked</button>
-    <button type="button" data-view="disliked">Disliked</button>
-  </nav>
+  <div class="bar">
+    <nav class="views" id="views" aria-label="Show">
+      <button type="button" data-view="all" class="on">All</button>
+      <button type="button" data-view="soon">Closing<span class="wide"> soon</span></button>
+      <button type="button" data-view="liked">Liked</button>
+      <button type="button" data-view="disliked">Disliked</button>
+    </nav>
+  </div>
 
   <section class="list" id="list" aria-live="polite">
     <p class="empty">Loading residencies…</p>
@@ -47,6 +49,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>
