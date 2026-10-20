@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="lock.js?v=1"></script>
+<title>ArtScout</title>
+<meta name="description" content="Art residencies across the Arab world, found and checked by Badriyah's scout.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ArtScout">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#161230">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="masthead">
+  <div class="sky" aria-hidden="true"></div>
+  <svg class="dunes" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 92 C 140 60, 260 58, 400 82 S 650 112, 800 84 S 1050 50, 1200 74 L1200 120 L0 120 Z" fill="var(--dune-far)"/>
+    <path d="M0 106 C 180 84, 330 92, 470 104 S 760 118, 900 100 S 1100 86, 1200 98 L1200 120 L0 120 Z" fill="var(--dune-near)"/>
+  </svg>
+  <div class="mast-inner">
+    <p class="mast-ar" lang="ar" dir="rtl">كشّاف الإقامات الفنية</p>
+    <h1>ArtScout</h1>
+    <p class="mast-sub">Art residencies across the Arab world, found and checked by your scout.</p>
+    <p class="mast-run" id="lastrun">&nbsp;</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="summary" id="summary" aria-live="polite"></section>
+
+  <section class="controls" aria-label="Filter residencies">
+    <div class="search">
+      <input type="search" id="q" placeholder="Search a city, host, medium…" aria-label="Search residencies" autocomplete="off">
+    </div>
+    <div class="chips" id="views" role="group" aria-label="Show">
+      <button type="button" data-view="all" class="on">All open</button>
+      <button type="button" data-view="soon">Closing soon</button>
+      <button type="button" data-view="funded">Funded</button>
+      <button type="button" data-view="rolling">Rolling</button>
+      <button type="button" data-view="mine">Mine</button>
+    </div>
+    <div class="chips regions" id="regions" role="group" aria-label="Region"></div>
+    <div class="row-end">
+      <label class="sel"><span>Country</span>
+        <select id="country" aria-label="Country"><option value="">All countries</option></select>
+      </label>
+      <label class="sel"><span>Sort</span>
+        <select id="sort" aria-label="Sort">
+          <option value="deadline">Deadline first</option>
+          <option value="new">Newest finds</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="list" id="list" aria-live="polite">
+    <p class="empty">Opening the scout’s notebook…</p>
+  </section>
+
+  <p class="hidden-note" id="hiddennote"></p>
+</main>
+
+<footer class="foot">
+  <p>The scout looks for new residencies on Sunday, Tuesday and Thursday mornings, re-checks deadlines, and clears out the ones that have closed. Always confirm details on the residency’s own page before applying.</p>
+  <p><a href="https://badriyahs.github.io/BadriyahsTasks/">Badriyah’s Tasks</a> · <a href="https://badriyahs.github.io/BadriyahsTasks/calls.html">Calls</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js?v=1"></script>
+</body>
+</html>
