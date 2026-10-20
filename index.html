@@ -8,7 +8,7 @@
 <meta name="description" content="Art residencies across the Arab world.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&display=swap">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,49 +28,26 @@
   <div class="mast-inner">
     <p class="mast-ar" lang="ar" dir="rtl">كشّاف الإقامات الفنية</p>
     <h1>ArtScout</h1>
-    <p class="mast-sub">Art residencies across the Arab world, found and checked by your scout.</p>
-    <p class="mast-run" id="lastrun">&nbsp;</p>
+    <p class="mast-sub">Art residencies across the Arab world.</p>
   </div>
 </header>
 
 <main class="wrap">
-  <section class="summary" id="summary" aria-live="polite"></section>
-
-  <section class="controls" aria-label="Filter residencies">
-    <div class="search">
-      <input type="search" id="q" placeholder="Search a city, host, medium…" aria-label="Search residencies" autocomplete="off">
-    </div>
-    <div class="chips" id="views" role="group" aria-label="Show">
-      <button type="button" data-view="all" class="on">All open</button>
-      <button type="button" data-view="soon">Closing soon</button>
-      <button type="button" data-view="funded">Funded</button>
-      <button type="button" data-view="rolling">Rolling</button>
-      <button type="button" data-view="mine">Mine</button>
-    </div>
-    <div class="chips regions" id="regions" role="group" aria-label="Region"></div>
-    <div class="row-end">
-      <label class="sel"><span>Country</span>
-        <select id="country" aria-label="Country"><option value="">All countries</option></select>
-      </label>
-      <label class="sel"><span>Sort</span>
-        <select id="sort" aria-label="Sort">
-          <option value="deadline">Deadline first</option>
-          <option value="new">Newest finds</option>
-        </select>
-      </label>
-    </div>
-  </section>
+  <nav class="chips views" id="views" aria-label="Show">
+    <button type="button" data-view="all" class="on">All</button>
+    <button type="button" data-view="soon">Closing soon</button>
+    <button type="button" data-view="liked">Liked</button>
+  </nav>
 
   <section class="list" id="list" aria-live="polite">
-    <p class="empty">Opening the scout’s notebook…</p>
+    <p class="empty">Loading residencies…</p>
   </section>
 
   <p class="hidden-note" id="hiddennote"></p>
 </main>
 
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>

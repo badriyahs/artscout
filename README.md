@@ -9,9 +9,9 @@ Live at **https://badriyahs.github.io/artscout/** (password screen with its own 
   It searches, verifies each call page, writes `~/Documents/BadriyahsTasks-backup/artscout-today.json`, and runs
   `~/Documents/BadriyahsTasks-backup/artscout_write.py`, the same way the daily Gulf scout uses `scout_write.py`.
 - **The data** lives in the same Firebase database as Badriyah's Tasks (`badriyahstasks`), collection `artscout`.
-  The doc `_meta` records the last run. Each residency's `mine` field is the site user's own status (Saved, Applying, Applied, Accepted, Not for me);
-  only this site writes it, and the scout never changes it.
-- **This site** (`index.html`, `app.js`, `styles.css`) reads that collection and lets them filter by region, country, deadline and funding.
+  The doc `_meta` records the last run. Each residency's `mine` field is the reader's reaction (`up` 👍, `down` 👎, `heart` ❤️);
+  only this site writes it. The scout never changes it, and reads it as a hint for what to look for next.
+- **This site** (`index.html`, `app.js`, `styles.css`) reads that collection and shows three views: All, Closing soon and Liked.
   `lock.js` is the password screen (the same design as Badriyah's Tasks, with its own password; only a salted hash is stored).
 
 ## One-time Firebase rule
